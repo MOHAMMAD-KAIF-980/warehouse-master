@@ -1,58 +1,191 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
 
 :root {
-    --primary: #6366f1;
-    --success: #10b981;
-    --warning: #f59e0b;
-    --danger: #ef4444;
+    /* --- SUPER VIBRANT GRADIENTS --- */
+    /* Background Gradient (Puri website ka base rangeen rahega) */
+    --bg-grad: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+    
+    /* Primary (Indigo-Purple) */
+    --primary-grad: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); /* Neon Blue */
+    --primary-solid: #4facfe;
+    
+    /* Success (Green-Teal) */
+    --success-grad: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); /* Neon Green */
+    
+    /* Warning (Orange-Yellow) */
+    --warning-grad: linear-gradient(135deg, #f6d365 0%, #fda085 100%); /* Sunset Orange */
+    
+    /* Danger (Red-Pink) */
+    --danger-grad: linear-gradient(135deg, #ff0844 0%, #ffb199 100%); /* Bright Red */
+
+    /* Text Colors */
+    --text-main: #0f172a;
+    --text-muted: #64748b;
 }
 
 body {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    background: #f8fafc;
-    color: #1e293b;
+    background: var(--bg-grad); /* Rangeen Background */
+    color: var(--text-main);
     margin: 0;
+    min-height: h-screen;
 }
 
+/* --- NAVBAR (Rangeen Border ke saath) --- */
 .nav-vibrant {
-    background: white;
-    border-bottom: 1px solid #e2e8f0;
+    background: rgba(255, 255, 255, 0.95);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-bottom: 4px solid;
+    border-image: var(--primary-grad) 1; /* Neon border niche */
     padding: 1rem 2rem;
+    box-shadow: 0 10px 30px rgba(79, 172, 254, 0.2);
 }
 
+/* --- STAT CARDS (Ab dekho rangeen dhamaka) --- */
 .stat-card {
     background: white;
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    border-left: 6px solid var(--primary);
+    border-radius: 24px;
+    padding: 25px;
+    position: relative;
+    overflow: hidden;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid transparent;
 }
 
-.btn-main {
-    background: var(--primary);
+/* Hover karne par card rangeen chamkega */
+.stat-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 25px 50px -12px rgba(79, 172, 254, 0.5);
+    border-color: var(--primary-solid);
+}
+
+/* Card ke andar ka icon rangeen base par */
+.stat-card .icon-box {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-grad); /* Rangeen Icon Background */
     color: white;
-    padding: 10px 20px;
-    border-radius: 12px;
+    font-size: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+}
+
+/* Alag-alag cards ke liye alag gradients */
+.stat-card.success .icon-box { background: var(--success-grad); box-shadow: 0 8px 20px rgba(67, 233, 123, 0.4); }
+.stat-card.warning .icon-box { background: var(--warning-grad); box-shadow: 0 8px 20px rgba(246, 211, 101, 0.4); }
+.stat-card.danger .icon-box { background: var(--danger-grad); box-shadow: 0 8px 20px rgba(255, 8, 68, 0.4); }
+
+/* --- BUTTONS (Ekdum neon aur chamkeele) --- */
+.btn-main {
+    background: var(--primary-grad);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 16px;
+    font-weight: 800;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(79, 172, 254, 0.4);
+    transition: 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-main:hover {
+    box-shadow: 0 15px 35px rgba(79, 172, 254, 0.6);
+    transform: translateY(-3px);
+}
+
+/* Button ke upar ek chamakne wala effect */
+.btn-main::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(45deg);
+    transition: 0.5s;
+}
+
+.btn-main:hover::after {
+    left: 100%;
+    top: 100%;
+}
+
+/* --- INPUT FIELDS (Colourful focus) --- */
+.input-field {
+    width: 100%;
+    padding: 16px;
+    background: white;
+    border-radius: 16px;
+    border: 2px solid #e2e8f0;
+    margin-bottom: 15px;
+    transition: 0.3s;
     font-weight: 700;
+    color: var(--text-main);
+}
+
+.input-field:focus {
+    border-color: transparent;
+    border-image: var(--primary-grad) 1; /* Focus karne par border rangeen */
+    background: #f8fafc;
+    box-shadow: 0 0 0 5px rgba(79, 172, 254, 0.15);
+}
+
+/* --- TABLE STYLING (Rangeen Rows) --- */
+.data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px; /* Rows ke beech jagah */
+}
+
+.data-table thead th {
+    background: var(--primary-grad);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.data-table tbody tr {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.02);
     transition: 0.3s;
 }
 
-.btn-main:hover { opacity: 0.9; transform: translateY(-2px); }
+.data-table tbody tr:hover {
+    transform: scale(1.01);
+    box-shadow: 0 10px 25px rgba(79, 172, 254, 0.1);
+}
 
-/* Modal Styling */
+.data-table tbody td {
+    padding: 18px 15px;
+    font-weight: 600;
+}
+
+/* --- MODAL (Colourful backdrop) --- */
 .modal-overlay {
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
+    background: rgba(15, 23, 42, 0.7);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px); /* Zyada blur */
 }
 
-.input-field {
-    width: 100%;
-    padding: 12px;
-    background: #f1f5f9;
-    border-radius: 10px;
-    border: 1px solid #e2e8f0;
-    margin-bottom: 15px;
-    outline: none;
+.modal-content {
+    background: white;
+    border-radius: 32px;
+    padding: 40px;
+    border: 4px solid;
+    border-image: var(--primary-grad) 1; /* Modal ki border bhi rangeen */
+    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
 }
-
-.input-field:focus { border-color: var(--primary); }

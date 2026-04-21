@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product');
 
-// Get all products
+// 1. GET ALL
 router.get('/', async (req, res) => {
     try {
         const products = await Product.find().sort({ createdAt: -1 });
@@ -10,20 +10,32 @@ router.get('/', async (req, res) => {
     } catch (err) { res.status(500).json({ message: err.message }); }
 });
 
-// Add product
+// 2. ADD PRODUCT
 router.post('/add', async (req, res) => {
-    const product = new Product(req.body);
     try {
-        const newProduct = await product.save();
-        res.status(201).json(newProduct);
+        const product = new Product(req.body);
+        await product.save();
+        res.status(201).json(product);
     } catch (err) { res.status(400).json({ message: err.message }); }
 });
 
-// Delete product
+// 3. SELL/UPDATE QUANTITY (Auto-Update Logic)
+router.put('/:id', async (req, res) => {
+    try {
+        const updatedProduct = await Product.findByIdAndUpdate(
+            req.params.id, 
+            { $set: { quantity: req.body.quantity } }, 
+            { new: true }
+        );
+        res.json(updatedProduct);
+    } catch (err) { res.status(500).json({ message: "Update Failed" }); }
+});
+
+// 4. DELETE
 router.delete('/:id', async (req, res) => {
     try {
         await Product.findByIdAndDelete(req.params.id);
-        res.json({ message: 'Deleted' });
+        res.json({ message: "Deleted" });
     } catch (err) { res.status(500).json({ message: err.message }); }
 });
 
